@@ -1,0 +1,67 @@
+$loginIntroPaneContentWidth: 300px;
+
+.login-intro-pane {
+   position: relative;
+   width: 100%;
+   height: 100%;
+   background:  linear-gradient(45deg,#33b1f8 37%,#6e90f6 100%);
+
+   .bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url(./image/bg_notes.svg);
+      background-repeat: repeat;;
+      animation: phonetic-symbol-moving 5s linear infinite;
+   }
+
+   .content-area {
+      position: relative;
+      width: $loginIntroPaneContentWidth;
+      height: 100%;
+      padding-top: 60px;
+      margin: auto;
+      background: transparent;
+
+      .title {
+         display: block;
+         margin: 0 auto 30px;
+         width: 100%;
+         font-size: 20px;
+         color: #ffffff;
+      }
+
+      .logo {
+         display: block;
+         font-family: 'Tangerine', serif;
+         font-size: 48px;
+         color: #ffffff;
+         margin-bottom: 20px;
+      }
+
+      .intro {
+         display: block;
+         height: 122px;
+         font-size: 14px;
+         color: #ffffff;
+         line-height: 1.5;
+         overflow: hidden;
+      }
+
+      .register-btn {
+         position: absolute;
+         bottom: 70px;
+         display: block;
+         width: 100%;
+         height: 40px;
+         margin-top: 40px;
+         background: #ffffff;
+
+         .text {
+            color: #2196F3;
+         }
+      }
+   }
+}

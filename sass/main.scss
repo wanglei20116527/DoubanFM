@@ -1,0 +1,50 @@
+@import "./reset";
+@import "./font/font";
+@import "./vendor/vendor";
+@import "./animation/animation";
+@import "./component/component";
+
+html,
+body {
+	width: 100%;
+	height: 100%;
+	font-family: STHeiTi,simsun,sans-serif;
+}
+
+.clearfix {
+	&:before,
+	&:after {
+		content: "";
+		display: block;
+		*zoom: 1;
+	}
+
+	&:after {
+		clear: both;
+	}
+}
+
+.float-left {
+	float: left;
+}
+
+.float-right {
+	float: right;
+}
+
+.hide {
+	display: none !important;
+}
+
+.mr15 {
+	margin-right: 15px;
+}
+
+.app {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+
+

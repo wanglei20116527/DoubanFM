@@ -1,0 +1,52 @@
+.login-page {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #ffffff;
+
+	.login-dialog {
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		margin: auto;
+		width: 800px;
+		height: 500px;
+		background: #ffffff;
+		border-radius: 4px;
+		overflow: hidden;
+		box-shadow: 0 0 4px 0px rgba(0, 0, 0, .6);
+
+		background:  linear-gradient(45deg,#33b1f8 37%,#6e90f6 100%);
+
+		.intro-pane,
+	    .login-pane {
+	    	width: 50%;
+	    	height: 100%;
+
+	    	.title {
+	    		width: 300px;
+	    		font-size: 20px;
+	    	}
+	    } 
+
+	    .intro-pane {
+	    	
+	    	background-image: url(./image/bg_notes.svg);
+	    	background-repeat: repeat;;
+	    	animation: phonetic-symbol-moving 5s linear infinite;
+
+	    	
+
+	    	.title, 
+	    	.subtitle {
+	    		color: #ffffff;
+	    	}
+	    }
+
+	}
+
+}

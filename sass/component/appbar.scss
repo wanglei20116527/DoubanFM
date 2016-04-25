@@ -1,0 +1,17 @@
+.appbar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 64px;
+	line-height: 64px;
+	padding: 0 20px;
+	color: #ffffff;
+	background: #2196F3;
+	box-shadow: 0 0 4px 0 rgba(0, 0, 0, .4);
+
+	.appbar-group {
+		display: inline-block;
+		height: 100%;	
+	}
+}
