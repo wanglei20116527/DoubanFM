@@ -1,0 +1,49 @@
+.volume-slider {
+	position: relative;
+	display: inline-block;
+	width: 24px;
+	height: 18px;
+	font-size: 16px;
+	padding-left: 24px;
+	overflow: hidden;
+	vertical-align: middle;
+	transition: width 0.2s linear;
+	-webkit-transition: width 0.2s linear;
+
+	&:hover {
+		width: 80px;
+	}
+
+	.volume-icon {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+
+	.volume-progress {
+		display: block;
+		position: relative;
+		width: 100%;
+		height: 18px;
+		cursor: pointer;
+
+		.bar {
+			position: absolute;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			margin: auto;
+			width: 100%;
+			height: 2px;
+			background: #e5e5e8;
+		
+			.inner-bar {
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				background: #9D9DA0;
+			}
+		}
+	}
+}

@@ -1,0 +1,41 @@
+.playing-songlist {
+	position: relative;
+	width: 216px;
+	height: 300px;
+	overflow: hidden;
+	color: #7c7b82;
+
+	.container {
+		position: relative;
+		height: 100%;
+
+		.title {
+			margin-bottom: 20px;
+			font-size: 16px;
+			font-weight: 400;
+		}
+
+		.item {
+			width: 100%;
+			margin-bottom: 10px;
+			padding-right: 10px;
+			font-size: 13px;
+			line-height: 18px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			font-weight: 500;
+			
+			&:hover {
+				color: #4A4747;
+			}
+
+			&.playing {
+				color: #030303;
+			}
+
+			.content {
+				cursor: pointer;
+			}
+		}
+	}
+}

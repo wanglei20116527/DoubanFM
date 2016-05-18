@@ -1,0 +1,11 @@
+.dialog {
+	outline: none;
+	box-shadow: 0 0 4px 0 #9C9898;
+
+	&.login-dialog {
+		position: absolute;
+		right: 20px;
+		top: 20px;
+		width: 330px;
+	}
+}

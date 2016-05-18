@@ -4,7 +4,7 @@ const QueryString = require('querystring');
 
 const Cookie = require('./cookie');
 
-const TIMEOUT = 10000;
+const TIMEOUT = 5000;
 const HOST = 'douban.fm';
 const CONTENT_TYPE = 'application/x-www-form-urlencoded';
 const USER_AGENT = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.86 Safari/537.36';
@@ -75,13 +75,9 @@ class RequestClient {
 				resolve(res);
 			});
 
-			req.on('error', (e)=>{
-				reject(e);
-			});
+			req.on('error', reject);
 
-			req.on('checkExpectation', (e)=>{
-				reject(e);
-			});
+			req.on('checkExpectation', reject);
 
 			req.setTimeout(TIMEOUT, ()=>{
 				reject(new Error(`request json ${url} timeout`));

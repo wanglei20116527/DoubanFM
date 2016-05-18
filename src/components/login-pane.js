@@ -82,19 +82,11 @@ class LoginPane extends React.Component {
 	}
 
 	onLoginListener(err, success, data){
-		if(err || !success){
+		if( err || !success ){
 			this.setState({
 				showErrorMsg: true,
 				errMsg: !!err ? err.message : data
 			});
-
-		}else{
-			this.setState({
-				showErrorMsg: false,
-				errMsg: null,
-			});
-
-			console.log(data);
 		}
 	}
 

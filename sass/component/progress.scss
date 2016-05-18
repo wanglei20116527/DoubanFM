@@ -1,0 +1,44 @@
+.progress {
+	position: relative;
+	display: block;
+	cursor: pointer;
+	background: transparent;
+
+	.inner-wrapper {
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		height: 1px;
+		background: #dadada;
+
+		.bar,
+		.download-bar {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+		}
+
+		.download-bar {
+			z-index: 1;
+			background: #C4C4C4;
+		}
+		
+		.bar {
+			cursor: pointer;
+			z-index: 2;
+			background: #6BBD7A;
+
+			.indicator {
+				position: absolute;
+				right: -4px;
+				top: -4px;
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background: #6BBD7A;
+				cursor: pointer;
+			}
+		}
+	}
+}

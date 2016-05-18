@@ -1,0 +1,74 @@
+.user-block {
+	position: relative;
+	display: inline-block;
+
+	.user-dialog-btn {
+		line-height: 1;
+		.img {
+			width: 35px;
+			height: 35px;
+		}
+	}
+
+	.user-dialog {
+		position: absolute;
+		top: 60px;
+		right: 0;
+		height: 136px;
+		padding: 20px;
+		line-height: 1;
+		background: #fff;
+		color: #000;
+		font-size: 13px;
+
+		.avatar-img {
+			position: absolute;
+			padding: 20px;
+			top: 0;
+			left: 0;
+			cursor: pointer;
+			z-index: 2;
+
+			.img {
+				width: 100px;
+				height: 100px;
+			}
+		}
+
+		.avatar-info {
+			position: relative;
+			height: 100%;
+			z-index: 1;
+			padding-left: 120px;
+			
+			.username {
+				padding-top: 10px;
+				margin-bottom: 15px;
+				color: #000;
+				font-weight: bold;
+			}
+
+			.play-record {
+				margin-bottom: 15px;
+				color: #2196F3;
+				white-space: nowrap;
+			}
+
+			.logout-btn {
+				float: right;
+   				width: 80px;
+    			border-radius: 2px;
+    			background: #2196F3;
+    			box-shadow: 0 0 4px rgba(0 ,0, 0, .3);
+				
+				.text {
+					font-size: 14px;
+					line-height: 2.5;
+				}
+
+			}
+		}
+	}
+
+
+}

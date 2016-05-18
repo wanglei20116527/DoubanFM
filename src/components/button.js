@@ -2,7 +2,11 @@ const React = require('react');
 
 class Button extends React.Component {
 	render(){
-		let className = ['btn', this.props.className].join(' ');
+		let className = [
+		   'btn', 
+		   this.props.className,
+		   
+		].join(' ');
 
 		return (
 			<button

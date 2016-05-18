@@ -1,0 +1,54 @@
+$brustHeartLength: 2900px;
+$brustHeartStepCount: 29;
+
+$brustHeartStepLen: $brustHeartLength / $brustHeartStepCount;
+
+@keyframes brust-heart {
+	0%{
+		background-position: 0 50%; 
+	}
+
+	100%{
+		background-position: ($brustHeartStepLen - $brustHeartLength) 50%; 
+	}
+}
+
+.brust-heart-button {
+	position: relative;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	cursor: default;
+
+	.mask {
+		position: absolute;
+		z-index: 2;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		cursor: pointer;
+	}
+
+	.brust-heart-icon {
+		position: absolute;
+		z-index: 1;
+		top: -25px;
+		left: -25px;
+		width: 100px;
+		height: 100px;
+		background-image: url(./image/heart.png);
+
+		&.inactive {
+			background-position: 0 50%;
+		}
+
+		&.active {
+			background-position: ($brustHeartStepLen - $brustHeartLength)  50%;
+		}
+	}
+}
+
+.brust-heart {
+	animation: brust-heart .8s steps($brustHeartStepCount - 1, end); 
+}

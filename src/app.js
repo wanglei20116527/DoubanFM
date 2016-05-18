@@ -3,16 +3,21 @@ const React = require('react');
 const ReactRouter = require('react-router');
 const Link = ReactRouter.Link;
 
-const Text = require('./components/text');
+const LeftNav = require('material-ui/lib/left-nav');
 const Button = require('./components/button');
+const Text = require('./components/text');
 const Appbar = require('./components/appbar');
-const LoginPage = require('./components/login-page');
-const LoginDialog = require('./components/login-dialog');
+const UserBlock = require('./components/user-block');
+const LoginBlock = require('./components/login-block');
 const MenuButton = require('./components/menu-button');
 const AppbarGroup = require('./components/appbar-group');
-const DrawerLayout = require('./components/drawer-layout');
+const Player = require('./components/red-heart-player');
+const RedHeartPage = require('./components/red-heart-page');
+
 
 const UserStore = require('./stores/user');
+const MusicStore = require('./stores/music');
+const PlayList = require('./stores/playlist');
 
 
 class App extends React.Component {
@@ -21,119 +26,131 @@ class App extends React.Component {
 
 		this.state = {
 			showLeftNav: false,
-			showLoginPage: false,
-			title: 'DoubanFM',
-			menu: [
-				{
-					text: 'wanglei',
-					to: '/wanglei'
-				},
+			isUserLogin: false,
 
-				{
-					text: 'houna',
-					to: '/houna'
-				}
-			]
+			title: 'DoubanFM',
 		};
 
 		[
-			'showLeftNav',
-			'showLoginPage',
-			'onLoginListener',
-			'onDrawerLayoutStateChanged',
+			'_showLeftNav',
+			'_showLoginPage',
+			'_onLoginListener',
+			'_onDrawerLayoutStateChanged',
+			'_getUserBlock',
+			'_switchLeftNav',
 
 		].forEach((func)=>{
 			this[func] = this[func].bind(this);
 		});
 	}
 
-	showLeftNav(){
+	componentDidMount(){
+
+		UserStore.addLoginListener(this._onLoginListener);
+	}
+
+	componentWillUnmount(){
+		UserStore.removeLoginListener(this._onLoginListener);
+	}
+
+	shouldComponentUpdate(nextProps, nextState){
+		return nextProps.showLeftNav !== nextState.showLeftNav ||
+		       nextState.isUserLogin !== nextState.isUserLogin ||
+		       nextState.title !== nextState.title;
+	}
+
+	_showLeftNav(){
+		this._switchLeftNav(true);
+	}
+
+	_switchLeftNav(show){
 		this.setState({
-			showLeftNav: true
+			showLeftNav: show
 		});
 	}
 
-	showLoginPage(){
+	_showLoginPage(){
 		this.setState({
 			showLoginPage: true
 		});
 	}
 
-	onDrawerLayoutStateChanged(isNavShow){
+	_onDrawerLayoutStateChanged(isNavShow){
 		this.setState({
 			showLeftNav: isNavShow
 		});
 	}
 
-	componentDidMount(){
-
-		UserStore.addLoginListener(this.onLoginListener);
-	}
-
-	componentWillUnmount(){
-		UserStore.removeLoginListener(this.onLoginListener);
-	}
-
-	shouldComponentUpdate(nextProps, nextState){
-		
-		return true;
-	}
-
-	onLoginListener(err, data){
+	_onLoginListener(err, success, data){
 		if(err){
 			console.error(err);
 			return;
 		}
 
 		this.setState({
-			showLoginPage: data.r != 0,
+			isUserLogin: success
 		});
 	}
 
+	_getUserBlock(){
+		let block = null;
+		
+		if( this.state.isUserLogin){
+			block = <UserBlock />;
+
+		}else{
+			block = <LoginBlock />;
+		}
+
+		return block;
+	}
+
 	render() {
-		let style = {
-			width: '250px'
-		};
-
 		return (
-			<div className='app'>
-			   <DrawerLayout 
-			      showNav={this.state.showLeftNav}
-			      onRequestChange={this.onDrawerLayoutStateChanged}>
-
-			      <div style={ style }></div>
-
-				  <div>
-				     <Appbar>
-				        <AppbarGroup className='mr15'>
-						   <MenuButton
-						      onClick={this.showLeftNav}
-						   />
-						</AppbarGroup>
-
-						<AppbarGroup>
-						   <Text text='DoubanFM'/>
-						</AppbarGroup>
-
-						<AppbarGroup float={AppbarGroup.RIGHT}>
-						    <Button
-						       onClick={this.showLoginPage}>
-						       <Text text='登陆'/>
-						    </Button>
-
-						    <LoginDialog />
-						</AppbarGroup>
-					 </Appbar>
-					
-					 <div>
-					   {this.props.children}
-				     </div>
-			      </div>
-			   </DrawerLayout>
-			</div>
+			<RedHeartPage />
 		);
 	}
 }
 
 module.exports = App;
+
+// <div className='app'>
+// 		      <Appbar>
+// 			     <AppbarGroup 
+// 			        className='mr15'>
+// 		            <MenuButton
+// 					   onClick={this._showLeftNav}
+// 				    />
+// 				 </AppbarGroup>
+
+// 			     <AppbarGroup>
+// 				    <Text 
+// 				       text='DoubanFM'
+// 				    />
+// 				 </AppbarGroup>
+
+// 				 <AppbarGroup 
+// 				    float={AppbarGroup.RIGHT}>
+// 				    {this._getUserBlock()}
+// 				 </AppbarGroup>
+// 		      </Appbar>
+
+// 		      <div>
+
+// 		         {this.props.children}
+// 		      </div>
+
+// 		      <LeftNav
+// 		         docked={false}
+//                  width={250}
+//                  open={this.state.showLeftNav}
+//                  onRequestChange={this._switchLeftNav}>
+//               </LeftNav>
+// 		   </div>
+
+
+
+
+
+
 

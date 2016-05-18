@@ -3,6 +3,9 @@ const Url = require('url');
 const Event = require('events');
 const QueryString = require('querystring');
 
+const Decorators = require('core-decorators');
+const autobind = Decorators.autobind;
+
 const CaptchaStore = require('./captcha');
 
 const ActionType = require('../constants/action-type');
@@ -27,24 +30,12 @@ class User extends Event {
 	constructor(...props){
 		super(...props);
 
-		[
-		   'handle',
-		   'addLoginListener',
-		   'removeLoginListener',
-		   'login',
-		   'logout',
-		   'getUserInfo',
-
-		].forEach((func)=>{
-			this[func] = this[func].bind(this);
-		});
-
-
 		this.userInfo = null;
 
 		this.dispatchToken = Dispatcher.register(this.handle);
 	}
 
+	@autobind
 	handle(payload){
 		switch(payload.type){
 
@@ -79,22 +70,27 @@ class User extends Event {
 		}
 	}
 
+	@autobind
 	getUserInfo(){
 		return this.userInfo;
 	}
 
+	@autobind
 	get(key){
 		return this.userInfo[key] || null;
 	}
 
+	@autobind
 	addLoginListener(fn){
 		this.addListener( EVENT.LOGIN, fn );
 	}
 
+	@autobind
 	removeLoginListener(fn){
-		this.removeLoginListener( EVENT.LOGIN, fn );
+		this.removeListener( EVENT.LOGIN, fn );
 	}
 
+	@autobind
 	login(username, password, captcha, captchaId){
 		return new Promise((resolve, reject) => {
 			const data = {
@@ -143,6 +139,7 @@ class User extends Event {
 		});
 	}
 
+	@autobind
 	logout(){
 
 	}

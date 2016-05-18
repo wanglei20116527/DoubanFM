@@ -2,9 +2,14 @@ const Url = require('url');
 const Event = require('events');
 const QueryString = require('querystring');
 
-const RequestClient = require('../utils/RequestClient');
+const RequestClient = require('../utils/request-client');
 
-const BASE_URL = 'http://douban.fm/j/v2/playlist';
+const UserStore = require('./user');
+
+const LYRIC_URL = 'http://douban.fm/j/v2/lyric';
+const PLAYLIST_BASE_URL = 'http://douban.fm/j/v2/playlist';
+const RED_HEART_PLAYLIST = 'http://douban.fm/j/v2/redheart/songs';
+const RED_HEART_PLAYLIST_BASIC = 'http://douban.fm/j/v2/redheart/basic';
 
 const MANIPULATE_TYPE = {
 	NEW: 'n',
@@ -41,12 +46,61 @@ class Playlist extends Event {
 		return this._song || null;
 	}
 
+	fetchBasicRedHeartPlaylist(){
+		return new Promise((resolve, reject)=>{
+			try{
+				const url = RED_HEART_PLAYLIST_BASIC;
+
+				RequestClient.getJson(url)
+
+				.then((data)=>{
+					console.log(data);
+					resolve(data);
+				})
+
+				.catch(reject);
+
+			}catch(e){
+				reject(e);
+			};
+		});
+	}
+
+	fetchRedHeartPlaylist(){
+		return new Promise((resolve, reject)=>{
+			this.fetchBasicRedHeartPlaylist()
+
+			.then((data)=>{
+				console.log(data);
+				const sids = (data.songs || []).map((song)=>{
+					return song.sid; 
+				});
+
+				const params = {
+					'sids': sids.join('|'),
+					'ck': UserStore.get('ck'),
+					'kbps': DEFAULT_PARAMETER.kbps,
+				};
+
+				RequestClient.getJson(RED_HEART_PLAYLIST, params, "POST")
+
+				.then((data)=>{
+					resolve(data);
+				})
+
+				.catch(reject);
+
+			})
+
+			.catch(reject);
+		});
+	}
+
 	init(){
 		return new Promise((resolve, reject)=>{
-			let data = Object.assign(DEFAULT_PARAMETER, {
-			});
+			const params = Object.assign({}, DEFAULT_PARAMETER);
 
-			RequestClient.getJson(BASE_URL, data)
+			RequestClient.getJson(PLAYLIST_BASE_URL, params)
 
 			.then((data)=>{
 				if( data.r === 0 ){
@@ -58,9 +112,29 @@ class Playlist extends Event {
 				}				
 			})
 
-			.catch((e)=>{
+			.catch(reject);
+		});
+	}
+
+	loadLyric(sid, ssid){
+		return new Promise((resolve, reject)=>{
+			try{
+				const params = {
+					sid: sid,
+					ssid: ssid,
+				};
+
+				RequestClient.getJson(LYRIC_URL, params)
+
+				.then((data)=>{
+					resolve(data);
+				})
+
+				.catch(reject);
+
+			}catch(e){
 				reject(e);
-			});
+			}
 		});
 	}
 
@@ -72,7 +146,7 @@ class Playlist extends Event {
 				sid: sid
 			});
 
-			RequestClient.getJson(BASE_URL, data)
+			RequestClient.getJson(PLAYLIST_BASE_URL, data)
 
 			.then((data)=>{
 				if( data.r === 0 ){
@@ -84,9 +158,7 @@ class Playlist extends Event {
 				}				
 			})
 
-			.catch((e)=>{
-				reject(e);
-			});
+			.catch(reject);
 		});
 	}
 
@@ -98,7 +170,7 @@ class Playlist extends Event {
 				sid: sid
 			});
 
-			RequestClient.getJson(BASE_URL, data)
+			RequestClient.getJson(PLAYLIST_BASE_URL, data)
 
 			.then((data)=>{
 				if( data.r === 0 ){
@@ -110,9 +182,7 @@ class Playlist extends Event {
 				}				
 			})
 
-			.catch((e)=>{
-				reject(e);
-			});
+			.catch(reject);
 		});
 	}
 
@@ -124,7 +194,7 @@ class Playlist extends Event {
 				sid: sid
 			});
 
-			RequestClient.getJson(BASE_URL, data)
+			RequestClient.getJson(PLAYLIST_BASE_URL, data)
 
 			.then((data)=>{
 				if( data.r === 0 ){
@@ -136,9 +206,7 @@ class Playlist extends Event {
 				}				
 			})
 
-			.catch((e)=>{
-				reject(e);
-			});
+			.catch(reject);
 		});
 	}
 
@@ -150,7 +218,7 @@ class Playlist extends Event {
 				sid: sid
 			});
 
-			RequestClient.getJson(BASE_URL, data)
+			RequestClient.getJson(PLAYLIST_BASE_URL, data)
 
 			.then((data)=>{
 				if( data.r === 0 ){
@@ -162,9 +230,7 @@ class Playlist extends Event {
 				}				
 			})
 
-			.catch((e)=>{
-				reject(e);
-			});
+			.catch(reject);
 		});
 	}
 
@@ -176,7 +242,7 @@ class Playlist extends Event {
 				sid: sid
 			});
 
-			RequestClient.getJson(BASE_URL, data)
+			RequestClient.getJson(PLAYLIST_BASE_URL, data)
 
 			.then((data)=>{
 				if( data.r === 0 ){
@@ -187,9 +253,7 @@ class Playlist extends Event {
 				}				
 			})
 
-			.catch((e)=>{
-				reject(e);
-			});
+			.catch(reject);
 		});
 	}
 }
